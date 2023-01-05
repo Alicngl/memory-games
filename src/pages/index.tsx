@@ -8,10 +8,10 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
-import Login from "../components/Login";
+import Login from "../components/pages/Login";
 
 const Index = () => (
-  <Stack height="100vh" bg={"#6b68ba"}>
+  <Stack height="100vh" bg={"#6b68ba"} w="full">
     <Login />
   </Stack>
 );
