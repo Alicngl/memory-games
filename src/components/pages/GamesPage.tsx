@@ -6,16 +6,48 @@ import User from "../shared/User";
 
 function GamesPage() {
   const [data, setData] = useState(GAME.sort(() => Math.random() - 0.5));
-
   const [previousCardState, setPreviousCardState] = useState(-1);
   const previousIndex = useRef(-1);
+  const [user1, setUser1] = useState({ moves: 0, score: 0 });
+  const [user2, setUser2] = useState({ moves: 0, score: 0 });
+  const [changeUser, setChangeUser] = useState(true);
 
   const checkData = (current) => {
     if (data[current].id === data[previousCardState].id) {
       data[current].status = "active";
       data[previousCardState].status = "active";
       setPreviousCardState(-1);
+      if (changeUser === true) {
+        setUser1({
+          ...user1,
+          ["moves"]: user1.moves + 1,
+          ["score"]: user1.score + 1,
+        });
+        setChangeUser(!changeUser);
+      } else {
+        setUser2({
+          ...user2,
+          ["moves"]: user2.moves + 1,
+          ["score"]: user2.score + 1,
+        });
+        setChangeUser(!changeUser);
+      }
     } else {
+      if (changeUser === true) {
+        setUser1({
+          ...user1,
+          ["moves"]: user1.moves + 1,
+          ["score"]: user1.score,
+        });
+        setChangeUser(!changeUser);
+      } else {
+        setUser2({
+          ...user2,
+          ["moves"]: user2.moves + 1,
+          ["score"]: user2.score,
+        });
+        setChangeUser(!changeUser);
+      }
       data[current].status = "active";
       setData([...data]);
       setTimeout(() => {
@@ -51,15 +83,15 @@ function GamesPage() {
         <User
           src={"/avatar1.png"}
           name={"Player 1"}
-          moves={1}
-          score={1}
+          moves={user1.moves}
+          score={user1.score}
           border="1px"
         />
         <User
           src={"/avatar2.png"}
           name={"Player 2"}
-          moves={1}
-          score={1}
+          moves={user2.moves}
+          score={user2.score}
           border=""
         />
       </Flex>
