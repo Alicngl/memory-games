@@ -1,4 +1,4 @@
-export const GAME = [
+export const GAME6 = [
   {
     id: 0,
     status: "",
@@ -178,5 +178,88 @@ export const GAME = [
     id: 17,
     status: "",
     image: "/animal18.png",
+  },
+];
+
+export const GAME4 = [
+  {
+    id: 0,
+    status: "",
+    image: "/animal1.png",
+  },
+  {
+    id: 0,
+    status: "",
+    image: "/animal1.png",
+  },
+  {
+    id: 1,
+    status: "",
+    image: "/animal2.png",
+  },
+  {
+    id: 1,
+    status: "",
+    image: "/animal2.png",
+  },
+  {
+    id: 2,
+    status: "",
+    image: "/animal3.png",
+  },
+  {
+    id: 2,
+    status: "",
+    image: "/animal3.png",
+  },
+  {
+    id: 3,
+    status: "",
+    image: "/animal4.png",
+  },
+  {
+    id: 3,
+    status: "",
+    image: "/animal4.png",
+  },
+  {
+    id: 4,
+    status: "",
+    image: "/animal5.png",
+  },
+  {
+    id: 4,
+    status: "",
+    image: "/animal5.png",
+  },
+  {
+    id: 5,
+    status: "",
+    image: "/animal6.png",
+  },
+  {
+    id: 5,
+    status: "",
+    image: "/animal6.png",
+  },
+  {
+    id: 6,
+    status: "",
+    image: "/animal7.png",
+  },
+  {
+    id: 6,
+    status: "",
+    image: "/animal7.png",
+  },
+  {
+    id: 7,
+    status: "",
+    image: "/animal8.png",
+  },
+  {
+    id: 7,
+    status: "",
+    image: "/animal8.png",
   },
 ];
