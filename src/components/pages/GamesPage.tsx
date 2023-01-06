@@ -6,11 +6,12 @@ import {
   SliderTrack,
   Stack,
 } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GAME6, GAME4 } from "../../constants";
 import CardComponent from "../shared/CardComponent";
 import User from "../shared/User";
 import Countdown from "react-countdown";
+import SettingStore from "../../stores/SettingStore";
 
 function GamesPage() {
   const [data, setData] = useState(GAME6.sort(() => Math.random() - 0.5));
@@ -20,6 +21,66 @@ function GamesPage() {
   const [user2, setUser2] = useState({ moves: 0, score: 0 });
   const [changeUser, setChangeUser] = useState(true);
   const [time, setTime] = useState(1);
+  useEffect(() => {
+    const person = SettingStore.person;
+    const grid = SettingStore.grid;
+    const time = SettingStore.time;
+    if (grid === 4) {
+      setData(GAME4.sort(() => Math.random() - 0.5));
+    } else {
+      setData(GAME6.sort(() => Math.random() - 0.5));
+    }
+  }, []);
+  const USER = [
+    {
+      user1: (
+        <User
+          name={undefined}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+    {
+      user2: (
+        <User
+          name={undefined}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+    {
+      user3: (
+        <User
+          name={undefined}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+    {
+      user4: (
+        <User
+          name={undefined}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+  ];
 
   const checkData = (current) => {
     if (data[current].id === data[previousCardState].id) {
