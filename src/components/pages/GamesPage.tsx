@@ -18,9 +18,9 @@ function GamesPage() {
 
   const [details, setDetails] = useState([
     { moves: 0, score: 0 },
-    { moves: 0, score: 0 },
-    { moves: 0, score: 0 },
-    { moves: 0, score: 0 },
+    { key: "0.4", moves: 0, score: 0 },
+    { key: "0.4", moves: 0, score: 0 },
+    { key: "0.4", moves: 0, score: 0 },
   ]);
   const [users, setUsers] = useState([
     {
@@ -29,31 +29,31 @@ function GamesPage() {
       score: 0,
       src: "/avatar1.png",
       border: "1px",
-      opacity: undefined,
+      opacity: 1,
     },
     {
-      name: "Player 1",
+      name: "Player 2",
+      moves: 0,
+      score: 0,
+      src: "/avatar2.png",
+      border: "1px",
+      opacity: 0.4,
+    },
+    {
+      name: "Player 3",
       moves: 0,
       score: 0,
       src: "/avatar1.png",
       border: "1px",
-      opacity: undefined,
+      opacity: 0.4,
     },
     {
-      name: "Player 1",
+      name: "Player 4",
       moves: 0,
       score: 0,
-      src: "/avatar1.png",
+      src: "/avatar2.png",
       border: "1px",
-      opacity: undefined,
-    },
-    {
-      name: "Player 1",
-      moves: 0,
-      score: 0,
-      src: "/avatar1.png",
-      border: "1px",
-      opacity: undefined,
+      opacity: 0.4,
     },
   ]);
   const [previousCardState, setPreviousCardState] = useState(-1);
@@ -89,29 +89,59 @@ function GamesPage() {
       setPreviousCardState(-1);
 
       if (changeUser === 0) {
-        details[changeUser].moves += 1;
-        details[changeUser].score += 1;
+        users[0].opacity = 0.4;
+        users[1].opacity = 1;
+        setUsers([...users]);
+        details[0].moves += 1;
+        details[0].score += 1;
+
+
         setDetails([...details]);
 
         setChangeUser(changeUser + 1);
       } else {
+        console.log("else");
+
         if (changeUser > SettingStore.person - 1) {
+          console.log("asjdhflajsdhf");
+
+          users[SettingStore.person - 1].opacity = 0.4;
+          users[0].opacity = 1;
+          setUsers([...users]);
           details[0].moves += 1;
-          details[changeUser].score += 1;
-          setDetails([...details]);
+          details[0].score += 1;
+
           setDetails([...details]);
           setChangeUser(1);
           console.log("lengt büyük");
         } else {
+          if (changeUser == SettingStore.person - 1) {
+            users[0].opacity = 1;
+            users[changeUser].opacity = 0.4;
+            setUsers([...users]);
+            console.log("değil");
+            setChangeUser(0);
+          } else {
+            setChangeUser(changeUser + 1);
+
+            users[changeUser].opacity = 0.4;
+            users[changeUser + 1].opacity = 1;
+            setUsers([...users]);
+            console.log("aaaaawwwww");
+          }
+
           details[changeUser].moves += 1;
           details[changeUser].score += 1;
-          setDetails([...details]);
 
-          setChangeUser(changeUser + 1);
+
+          setDetails([...details]);
         }
       }
     } else {
       if (changeUser === 0) {
+        users[0].opacity = 0.4;
+        users[1].opacity = 1;
+        setUsers([...users]);
         details[0].moves += 1;
 
         setDetails([...details]);
@@ -121,17 +151,35 @@ function GamesPage() {
         console.log("else");
 
         if (changeUser > SettingStore.person - 1) {
+          console.log("asjdhflajsdhf");
+
+          users[SettingStore.person - 1].opacity = 0.4;
+          users[0].opacity = 1;
+          setUsers([...users]);
           details[0].moves += 1;
 
           setDetails([...details]);
           setChangeUser(1);
           console.log("lengt büyük");
         } else {
+          if (changeUser == SettingStore.person - 1) {
+            users[0].opacity = 1;
+            users[changeUser].opacity = 0.4;
+            setUsers([...users]);
+            console.log("değil");
+            setChangeUser(0);
+          } else {
+            setChangeUser(changeUser + 1);
+
+            users[changeUser].opacity = 0.4;
+            users[changeUser + 1].opacity = 1;
+            setUsers([...users]);
+            console.log("aaaaawwwww");
+          }
+
           details[changeUser].moves += 1;
 
           setDetails([...details]);
-
-          setChangeUser(changeUser + 1);
         }
       }
       data[current].status = "active";
