@@ -15,66 +15,56 @@ import SettingStore from "../../stores/SettingStore";
 
 function GamesPage() {
   const [data, setData] = useState(GAME6.sort(() => Math.random() - 0.5));
+
+  const [details, setDetails] = useState([
+    { moves: 0, score: 0 },
+    { moves: 0, score: 0 },
+    { moves: 0, score: 0 },
+    { moves: 0, score: 0 },
+  ]);
   const [users, setUsers] = useState([
     {
-      user: (
-        <User
-          name={"Player 1"}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
+      name: "Player 1",
+      moves: 0,
+      score: 0,
+      src: "/avatar1.png",
+      border: "1px",
+      opacity: undefined,
     },
     {
-      user: (
-        <User
-          name={"Player 2"}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
+      name: "Player 1",
+      moves: 0,
+      score: 0,
+      src: "/avatar1.png",
+      border: "1px",
+      opacity: undefined,
     },
     {
-      user: (
-        <User
-          name={"Player 3"}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
+      name: "Player 1",
+      moves: 0,
+      score: 0,
+      src: "/avatar1.png",
+      border: "1px",
+      opacity: undefined,
     },
     {
-      user: (
-        <User
-          name={"Player 4"}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
+      name: "Player 1",
+      moves: 0,
+      score: 0,
+      src: "/avatar1.png",
+      border: "1px",
+      opacity: undefined,
     },
   ]);
   const [previousCardState, setPreviousCardState] = useState(-1);
   const previousIndex = useRef(-1);
-  const [user1, setUser1] = useState({ moves: 0, score: 0 });
-  const [user2, setUser2] = useState({ moves: 0, score: 0 });
-  const [changeUser, setChangeUser] = useState(true);
-  const [time, setTime] = useState(1);
+  const [changeUser, setChangeUser] = useState(0);
+  const [time, setTime] = useState(60);
   useEffect(() => {
     const person = SettingStore.person ? SettingStore.person : 1;
     const grid = SettingStore.grid;
     const time = SettingStore.time ? SettingStore.time : 1;
+    setTime(time);
     if (grid === 4) {
       setData(GAME4.sort(() => Math.random() - 0.5));
     } else {
@@ -87,42 +77,62 @@ function GamesPage() {
       users;
     }
   }, []);
+  // setTimeout(() => {
+  //   setTime(time - 1);
+  //   console.log(time, "asdddd");
+  // }, 1000);
 
-  const checkData = (current) => {
+  const checkData = (current: number) => {
     if (data[current].id === data[previousCardState].id) {
       data[current].status = "active";
       data[previousCardState].status = "active";
       setPreviousCardState(-1);
-      if (changeUser === true) {
-        setUser1({
-          ...user1,
-          ["moves"]: user1.moves + 1,
-          ["score"]: user1.score + 1,
-        });
-        setChangeUser(!changeUser);
+
+      if (changeUser === 0) {
+        details[changeUser].moves += 1;
+        details[changeUser].score += 1;
+        setDetails([...details]);
+
+        setChangeUser(changeUser + 1);
       } else {
-        setUser2({
-          ...user2,
-          ["moves"]: user2.moves + 1,
-          ["score"]: user2.score + 1,
-        });
-        setChangeUser(!changeUser);
+        if (changeUser > SettingStore.person - 1) {
+          details[0].moves += 1;
+          details[changeUser].score += 1;
+          setDetails([...details]);
+          setDetails([...details]);
+          setChangeUser(1);
+          console.log("lengt büyük");
+        } else {
+          details[changeUser].moves += 1;
+          details[changeUser].score += 1;
+          setDetails([...details]);
+
+          setChangeUser(changeUser + 1);
+        }
       }
     } else {
-      if (changeUser === true) {
-        setUser1({
-          ...user1,
-          ["moves"]: user1.moves + 1,
-          ["score"]: user1.score,
-        });
-        setChangeUser(!changeUser);
+      if (changeUser === 0) {
+        details[0].moves += 1;
+
+        setDetails([...details]);
+
+        setChangeUser(changeUser + 1);
       } else {
-        setUser2({
-          ...user2,
-          ["moves"]: user2.moves + 1,
-          ["score"]: user2.score,
-        });
-        setChangeUser(!changeUser);
+        console.log("else");
+
+        if (changeUser > SettingStore.person - 1) {
+          details[0].moves += 1;
+
+          setDetails([...details]);
+          setChangeUser(1);
+          console.log("lengt büyük");
+        } else {
+          details[changeUser].moves += 1;
+
+          setDetails([...details]);
+
+          setChangeUser(changeUser + 1);
+        }
       }
       data[current].status = "active";
       setData([...data]);
@@ -168,7 +178,18 @@ function GamesPage() {
     <Stack align={"center"} mt={5} spacing={9}>
       <Flex>
         {users.map((item, index) => {
-          return item.user;
+          return (
+            <Stack key={index}>
+              <User
+                name={item.name}
+                moves={details[index].moves}
+                score={details[index].score}
+                src={item.src}
+                border={item.border}
+                opacity={item.opacity}
+              />
+            </Stack>
+          );
         })}
         {/* <User
           opacity={changeUser === false ? "0.4" : "1"}
@@ -181,6 +202,14 @@ function GamesPage() {
 
         <User
           opacity={changeUser === true ? "0.4" : "1"}
+          src={"/avatar2.png"}
+          name={"Player 2"}
+          moves={user2.moves}
+          score={user2.score}
+          border=""
+        /> */}
+        {/* <User
+          opacity={changeUser === 1 ? "0.4" : "1"}
           src={"/avatar2.png"}
           name={"Player 2"}
           moves={user2.moves}
