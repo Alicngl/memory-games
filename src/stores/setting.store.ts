@@ -7,7 +7,7 @@ export type SettingHydration = {
   time: any;
 };
 
-export class SettingStore {
+export class SettingStores {
   root: RootStore;
   person: any = null;
   grid: any;
@@ -23,13 +23,17 @@ export class SettingStore {
     });
   }
 
-  // setSettings(person: any, grid: any, time: any) {
-  //   runInAction(() => {
-  //     this.person = person;
-  //     this.grid = grid;
-  //     this.time = time;
-  //   });
-  // }
+  backInitialize() {
+    this.setSettings(null, null, null);
+  }
+
+  setSettings(person: any, grid: any, time: any) {
+    runInAction(() => {
+      this.person = person;
+      this.grid = grid;
+      this.time = time;
+    });
+  }
 
   hydrate(data?: SettingHydration) {
     if (data) {

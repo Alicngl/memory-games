@@ -1,7 +1,7 @@
 import { SimpleGrid, Stack } from "@chakra-ui/react";
+import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
-import { useRootStore } from "../../providers/store.provider";
-
+import SettingStore from "../../stores/SettingStore";
 import ButtonComponent from "../shared/button";
 import GridButton from "../shared/GridButton";
 import NumberButton from "../shared/NumberButton";
@@ -10,13 +10,12 @@ import TextComponent from "../shared/TextComponent";
 
 function SettingPage() {
   const [setting, setSetting] = useState({ person: 1, grid: 4, time: 1 });
-  const { settingStore }: any = useRootStore();
 
   const handleValue = (e: any) => {
     setSetting({ ...setting, [e.name]: e.value });
   };
   useEffect(() => {
-    // settingStore.setSetting(setting.person, setting.grid, setting.time);
+    SettingStore.setSetting(setting.person, setting.grid, setting.time);
   }, [setting]);
   return (
     <Stack mt={10} spacing={9}>
@@ -49,4 +48,4 @@ function SettingPage() {
   );
 }
 
-export default SettingPage;
+export default observer(SettingPage);
