@@ -1,3 +1,5 @@
+import User from "../components/shared/User";
+
 export const GAME6 = [
   {
     id: 0,
@@ -263,3 +265,54 @@ export const GAME4 = [
     image: "/animal8.png",
   },
 ];
+
+export const USER =[
+  {
+    user: (
+      <User
+        name={"Player 1"}
+        moves={undefined}
+        score={undefined}
+        src={undefined}
+        border={undefined}
+        opacity={undefined}
+      />
+    ),
+  },
+  {
+    user: (
+      <User
+        name={"Player 2"}
+        moves={undefined}
+        score={undefined}
+        src={undefined}
+        border={undefined}
+        opacity={undefined}
+      />
+    ),
+  },
+  {
+    user: (
+      <User
+        name={"Player 3"}
+        moves={undefined}
+        score={undefined}
+        src={undefined}
+        border={undefined}
+        opacity={undefined}
+      />
+    ),
+  },
+  {
+    user: (
+      <User
+        name={"Player 4"}
+        moves={undefined}
+        score={undefined}
+        src={undefined}
+        border={undefined}
+        opacity={undefined}
+      />
+    ),
+  },
+]

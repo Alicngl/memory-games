@@ -15,6 +15,56 @@ import SettingStore from "../../stores/SettingStore";
 
 function GamesPage() {
   const [data, setData] = useState(GAME6.sort(() => Math.random() - 0.5));
+  const [users, setUsers] = useState([
+    {
+      user: (
+        <User
+          name={"Player 1"}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+    {
+      user: (
+        <User
+          name={"Player 2"}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+    {
+      user: (
+        <User
+          name={"Player 3"}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+    {
+      user: (
+        <User
+          name={"Player 4"}
+          moves={undefined}
+          score={undefined}
+          src={undefined}
+          border={undefined}
+          opacity={undefined}
+        />
+      ),
+    },
+  ]);
   const [previousCardState, setPreviousCardState] = useState(-1);
   const previousIndex = useRef(-1);
   const [user1, setUser1] = useState({ moves: 0, score: 0 });
@@ -22,65 +72,21 @@ function GamesPage() {
   const [changeUser, setChangeUser] = useState(true);
   const [time, setTime] = useState(1);
   useEffect(() => {
-    const person = SettingStore.person;
+    const person = SettingStore.person ? SettingStore.person : 1;
     const grid = SettingStore.grid;
-    const time = SettingStore.time;
+    const time = SettingStore.time ? SettingStore.time : 1;
     if (grid === 4) {
       setData(GAME4.sort(() => Math.random() - 0.5));
     } else {
       setData(GAME6.sort(() => Math.random() - 0.5));
     }
+    if (users.length != person) {
+      const sliced = users.splice(0, person);
+      setUsers(sliced);
+    } else {
+      users;
+    }
   }, []);
-  const USER = [
-    {
-      user1: (
-        <User
-          name={undefined}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
-    },
-    {
-      user2: (
-        <User
-          name={undefined}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
-    },
-    {
-      user3: (
-        <User
-          name={undefined}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
-    },
-    {
-      user4: (
-        <User
-          name={undefined}
-          moves={undefined}
-          score={undefined}
-          src={undefined}
-          border={undefined}
-          opacity={undefined}
-        />
-      ),
-    },
-  ];
 
   const checkData = (current) => {
     if (data[current].id === data[previousCardState].id) {
@@ -161,7 +167,10 @@ function GamesPage() {
   return (
     <Stack align={"center"} mt={5} spacing={9}>
       <Flex>
-        <User
+        {users.map((item, index) => {
+          return item.user;
+        })}
+        {/* <User
           opacity={changeUser === false ? "0.4" : "1"}
           src={"/avatar1.png"}
           name={"Player 1"}
@@ -177,7 +186,7 @@ function GamesPage() {
           moves={user2.moves}
           score={user2.score}
           border=""
-        />
+        /> */}
       </Flex>
       {/* <Countdown date={Date.now() + time * 60 * 1000} onComplete={TimeOut} />, */}
       <Slider
@@ -189,7 +198,7 @@ function GamesPage() {
           <SliderFilledTrack />
         </SliderTrack>
       </Slider>
-      <SimpleGrid columns={data === GAME4 ? 4 : 6} spacing={3}>
+      <SimpleGrid columns={data.length === 16 ? 4 : 6} spacing={3}>
         {data.map((item, index) => {
           return (
             <Stack>
