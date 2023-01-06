@@ -125,7 +125,7 @@ function GamesPage() {
         data[current].status = "";
         data[previousCardState].status = "";
         setData([...data]);
-      }, 500);
+      }, 1000);
     }
   };
 
