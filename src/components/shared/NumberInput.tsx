@@ -1,9 +1,12 @@
 import { Box, Flex, Icon, Stack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
-function NumberInput() {
-  const [value, setValue] = useState<number>(1);
+function NumberInput({ handleValue }) {
+  const [value, setValue] = useState({ name: "time", value: 1 });
+  useEffect(() => {
+    handleValue(value);
+  }, [value]);
   return (
     <Stack>
       <Flex bg={"#fff"} justifyContent="space-between" borderRadius={50}>
@@ -11,7 +14,8 @@ function NumberInput() {
           alignSelf="center"
           p={1}
           onClick={() => {
-            value != 1 && setValue(value - 1);
+            value.value != 1 &&
+              setValue({ ...value, ["value"]: value.value - 1 });
           }}>
           <Icon
             as={ChevronLeftIcon}
@@ -23,13 +27,14 @@ function NumberInput() {
           />
         </Box>
         <Box w={"60px"} textAlign="center" fontSize={"xl"} alignSelf="center">
-          {value}
+          {value.value}
         </Box>
         <Box
           alignSelf="center"
           p={1}
           onClick={() => {
-            value != 5 && setValue(value + 1);
+            value.value != 5 &&
+              setValue({ ...value, ["value"]: value.value + 1 });
           }}>
           <Icon
             as={ChevronRightIcon}

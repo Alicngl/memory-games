@@ -1,5 +1,7 @@
 import { SimpleGrid, Stack } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRootStore } from "../../providers/store.provider";
+
 import ButtonComponent from "../shared/button";
 import GridButton from "../shared/GridButton";
 import NumberButton from "../shared/NumberButton";
@@ -7,6 +9,15 @@ import NumberInput from "../shared/NumberInput";
 import TextComponent from "../shared/TextComponent";
 
 function SettingPage() {
+  const [setting, setSetting] = useState({ person: 1, grid: 4, time: 1 });
+  const { settingStore }: any = useRootStore();
+
+  const handleValue = (e: any) => {
+    setSetting({ ...setting, [e.name]: e.value });
+  };
+  useEffect(() => {
+    // settingStore.setSetting(setting.person, setting.grid, setting.time);
+  }, [setting]);
   return (
     <Stack mt={10} spacing={9}>
       <Stack align={"center"} spacing={5}>
@@ -15,15 +26,15 @@ function SettingPage() {
         </TextComponent>
         <Stack>
           <TextComponent color="#fff">Number Of Player</TextComponent>
-          <NumberButton />
+          <NumberButton handleValue={handleValue} />
         </Stack>
         <Stack align={"center"}>
           <TextComponent color="#fff">Grid Size</TextComponent>
-          <GridButton />
+          <GridButton handleValue={handleValue} />
         </Stack>
         <Stack>
           <TextComponent color="#fff">Round Time (Minutes)</TextComponent>
-          <NumberInput />
+          <NumberInput handleValue={handleValue} />
         </Stack>
       </Stack>
       <SimpleGrid columns={2} spacing={5}>

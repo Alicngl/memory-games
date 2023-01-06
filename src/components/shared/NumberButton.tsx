@@ -1,5 +1,5 @@
 import { Box, Flex, Stack } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const BOX = [
   {
@@ -16,9 +16,12 @@ const BOX = [
   },
 ];
 
-function NumberButton() {
-  const [value, setValue] = useState<number>(1);
-  console.log(value);
+function NumberButton({ handleValue }) {
+  const [value, setValue] = useState({ name: "person", value: 1 });
+
+  useEffect(() => {
+    handleValue(value);
+  }, [value]);
 
   return (
     <Stack>
@@ -33,14 +36,14 @@ function NumberButton() {
             key={index}
             p={1}
             alignSelf={"center"}
-            bg={value === item.value && "#494593"}
-            color={value === item.value && "#fff"}
+            bg={value.value === item.value && "#494593"}
+            color={value.value === item.value && "#fff"}
             borderRadius={50}
             cursor={"pointer"}
             width="30px"
             textAlign={"center"}
             onClick={() => {
-              setValue(item.value);
+              setValue({ ...value, ["value"]: item.value });
             }}>
             {item.value}
           </Box>
