@@ -15,10 +15,10 @@ import User from "../shared/User";
 import Countdown from "react-countdown";
 import SettingStore from "../../stores/SettingStore";
 import ModalComponent from "../shared/ModalComponent";
+import { useRouter } from "next/router";
 
 function GamesPage() {
   const [data, setData] = useState(GAME6.sort(() => Math.random() - 0.5));
-
   const [users, setUsers] = useState([
     {
       name: "Player 1",
@@ -58,6 +58,8 @@ function GamesPage() {
   const [changeUser, setChangeUser] = useState(0);
   const [time, setTime] = useState<number>();
   const [person, setPerson] = useState(1);
+  const router = useRouter();
+
   useEffect(() => {
     const person = SettingStore.person ? SettingStore.person : 1;
     setPerson(person);
@@ -77,10 +79,6 @@ function GamesPage() {
       users;
     }
   }, []);
-  useEffect(() => {
-    if (time === 0) {
-    }
-  }, [time]);
 
   const checkData = (current: number) => {
     if (data[current].id === data[previousCardState].id) {
@@ -214,20 +212,31 @@ function GamesPage() {
       }
     }
   };
-  setTimeout(() => {
-    if (time > 0) {
-      setTime(time - 1);
-    } else {
-      setTime(time);
-    }
-  }, 1000);
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      if (time > 0) {
+        setTime(time - 1);
+      } else {
+        setTime(time);
+      }
+    }, 1000);
+
+    const stopTimeOut = () => {
+      if (time === 0 || !statu) {
+        clearTimeout(timeOut);
+      }
+    };
+    stopTimeOut();
+  }, [time]);
+
   console.log(time);
   console.log(users, "aaaa");
 
   const statu = data.find((x) => x.status === "");
+
   return (
     <Stack align={"center"} mt={5} spacing={9}>
-      <Flex>
+      <Flex >
         {users.map((item, index) => {
           return (
             <Stack key={index}>
@@ -243,9 +252,10 @@ function GamesPage() {
           );
         })}
       </Flex>
-      {/* <Countdown date={Date.now() + time * 60 * 1000} onComplete={TimeOut} />, */}
-
-      <SimpleGrid columns={data.length === 16 ? 4 : 6} spacing={3}>
+      <SimpleGrid
+        columns={data.length === 16 ? 4 : 6}
+        spacing={3}
+        justifySelf="center">
         {data.map((item, index) => {
           return (
             <Stack>
@@ -256,7 +266,7 @@ function GamesPage() {
                 }}
                 key={index}
                 src={item.status === "" ? "/card-back.png" : item.image}
-                width={90}
+                width={[49, 90]}
                 height={20}
               />
             </Stack>
@@ -267,7 +277,7 @@ function GamesPage() {
         <Box>{time}</Box>
       </Stack>
       <ModalComponent
-        onopen={time == 0 ? "onopen" : "" || !statu}
+        onopen={!statu ? "statu" : time == 0 ? "onopen" : ""}
         users={users}
       />
     </Stack>
@@ -275,3 +285,5 @@ function GamesPage() {
 }
 
 export default GamesPage;
+
+//time == 0 ? "onopen" : statu ? "" : "statu"
