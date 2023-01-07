@@ -1,5 +1,7 @@
 import {
+  Box,
   Flex,
+  Image,
   SimpleGrid,
   Slider,
   SliderFilledTrack,
@@ -12,16 +14,11 @@ import CardComponent from "../shared/CardComponent";
 import User from "../shared/User";
 import Countdown from "react-countdown";
 import SettingStore from "../../stores/SettingStore";
+import ModalComponent from "../shared/ModalComponent";
 
 function GamesPage() {
   const [data, setData] = useState(GAME6.sort(() => Math.random() - 0.5));
 
-  const [details, setDetails] = useState([
-    { moves: 0, score: 0 },
-    { key: "0.4", moves: 0, score: 0 },
-    { key: "0.4", moves: 0, score: 0 },
-    { key: "0.4", moves: 0, score: 0 },
-  ]);
   const [users, setUsers] = useState([
     {
       name: "Player 1",
@@ -59,12 +56,15 @@ function GamesPage() {
   const [previousCardState, setPreviousCardState] = useState(-1);
   const previousIndex = useRef(-1);
   const [changeUser, setChangeUser] = useState(0);
-  const [time, setTime] = useState(60);
+  const [time, setTime] = useState<number>();
+  const [person, setPerson] = useState(1);
   useEffect(() => {
     const person = SettingStore.person ? SettingStore.person : 1;
+    setPerson(person);
+
     const grid = SettingStore.grid;
     const time = SettingStore.time ? SettingStore.time : 1;
-    setTime(time);
+    setTime(time * 60);
     if (grid === 4) {
       setData(GAME4.sort(() => Math.random() - 0.5));
     } else {
@@ -77,10 +77,10 @@ function GamesPage() {
       users;
     }
   }, []);
-  // setTimeout(() => {
-  //   setTime(time - 1);
-  //   console.log(time, "asdddd");
-  // }, 1000);
+  useEffect(() => {
+    if (time === 0) {
+    }
+  }, [time]);
 
   const checkData = (current: number) => {
     if (data[current].id === data[previousCardState].id) {
@@ -89,33 +89,38 @@ function GamesPage() {
       setPreviousCardState(-1);
 
       if (changeUser === 0) {
-        users[0].opacity = 0.4;
-        users[1].opacity = 1;
-        setUsers([...users]);
-        details[0].moves += 1;
-        details[0].score += 1;
+        if (person == 1) {
+          users[0].moves += 1;
+          users[0].score += 1;
 
+          setUsers([...users]);
 
-        setDetails([...details]);
+          setChangeUser(changeUser + 1);
+        } else {
+          users[0].opacity = 0.4;
+          users[1].opacity = 1;
+          setUsers([...users]);
+          users[0].moves += 1;
+          users[0].score += 1;
 
-        setChangeUser(changeUser + 1);
+          setUsers([...users]);
+
+          setChangeUser(changeUser + 1);
+        }
       } else {
-        console.log("else");
-
-        if (changeUser > SettingStore.person - 1) {
+        if (changeUser > person - 1) {
           console.log("asjdhflajsdhf");
 
-          users[SettingStore.person - 1].opacity = 0.4;
+          users[person - 1].opacity = 0.4;
           users[0].opacity = 1;
           setUsers([...users]);
-          details[0].moves += 1;
-          details[0].score += 1;
+          users[0].moves += 1;
+          users[0].score += 1;
 
-          setDetails([...details]);
+          setUsers([...users]);
           setChangeUser(1);
-          console.log("lengt büyük");
         } else {
-          if (changeUser == SettingStore.person - 1) {
+          if (changeUser == person - 1) {
             users[0].opacity = 1;
             users[changeUser].opacity = 0.4;
             setUsers([...users]);
@@ -130,39 +135,39 @@ function GamesPage() {
             console.log("aaaaawwwww");
           }
 
-          details[changeUser].moves += 1;
-          details[changeUser].score += 1;
+          users[changeUser].moves += 1;
+          users[changeUser].score += 1;
 
-
-          setDetails([...details]);
+          setUsers([...users]);
         }
       }
     } else {
       if (changeUser === 0) {
-        users[0].opacity = 0.4;
-        users[1].opacity = 1;
-        setUsers([...users]);
-        details[0].moves += 1;
+        if (person == 1) {
+          users[0].moves += 1;
 
-        setDetails([...details]);
+          setUsers([...users]);
+        } else {
+          users[0].opacity = 0.4;
+          users[1].opacity = 1;
+          setUsers([...users]);
+          users[0].moves += 1;
+
+          setUsers([...users]);
+        }
 
         setChangeUser(changeUser + 1);
       } else {
-        console.log("else");
-
-        if (changeUser > SettingStore.person - 1) {
-          console.log("asjdhflajsdhf");
-
-          users[SettingStore.person - 1].opacity = 0.4;
+        if (changeUser > person - 1) {
+          users[person - 1].opacity = 0.4;
           users[0].opacity = 1;
           setUsers([...users]);
-          details[0].moves += 1;
+          users[0].moves += 1;
 
-          setDetails([...details]);
+          setUsers([...users]);
           setChangeUser(1);
-          console.log("lengt büyük");
         } else {
-          if (changeUser == SettingStore.person - 1) {
+          if (changeUser == person - 1) {
             users[0].opacity = 1;
             users[changeUser].opacity = 0.4;
             setUsers([...users]);
@@ -174,12 +179,11 @@ function GamesPage() {
             users[changeUser].opacity = 0.4;
             users[changeUser + 1].opacity = 1;
             setUsers([...users]);
-            console.log("aaaaawwwww");
           }
 
-          details[changeUser].moves += 1;
+          users[changeUser].moves += 1;
 
-          setDetails([...details]);
+          setUsers([...users]);
         }
       }
       data[current].status = "active";
@@ -210,18 +214,17 @@ function GamesPage() {
       }
     }
   };
-  //   setTimeout(()=>{
-  //     setTime(time-1)
-  //     console.log(time);
-
-  //   },1000)
-  const TimeOut = () => {
-    console.log("asdasdasd");
-    setTimeout(() => {
+  setTimeout(() => {
+    if (time > 0) {
       setTime(time - 1);
-    }, 1000);
-  };
+    } else {
+      setTime(time);
+    }
+  }, 1000);
+  console.log(time);
+  console.log(users, "aaaa");
 
+  const statu = data.find((x) => x.status === "");
   return (
     <Stack align={"center"} mt={5} spacing={9}>
       <Flex>
@@ -230,8 +233,8 @@ function GamesPage() {
             <Stack key={index}>
               <User
                 name={item.name}
-                moves={details[index].moves}
-                score={details[index].score}
+                moves={users[index].moves}
+                score={users[index].score}
                 src={item.src}
                 border={item.border}
                 opacity={item.opacity}
@@ -239,47 +242,15 @@ function GamesPage() {
             </Stack>
           );
         })}
-        {/* <User
-          opacity={changeUser === false ? "0.4" : "1"}
-          src={"/avatar1.png"}
-          name={"Player 1"}
-          moves={user1.moves}
-          score={user1.score}
-          border="1px"
-        />
-
-        <User
-          opacity={changeUser === true ? "0.4" : "1"}
-          src={"/avatar2.png"}
-          name={"Player 2"}
-          moves={user2.moves}
-          score={user2.score}
-          border=""
-        /> */}
-        {/* <User
-          opacity={changeUser === 1 ? "0.4" : "1"}
-          src={"/avatar2.png"}
-          name={"Player 2"}
-          moves={user2.moves}
-          score={user2.score}
-          border=""
-        /> */}
       </Flex>
       {/* <Countdown date={Date.now() + time * 60 * 1000} onComplete={TimeOut} />, */}
-      <Slider
-        aria-label="slider-ex-1"
-        defaultValue={time}
-        value={time}
-        max={time}>
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-      </Slider>
+
       <SimpleGrid columns={data.length === 16 ? 4 : 6} spacing={3}>
         {data.map((item, index) => {
           return (
             <Stack>
               <CardComponent
+                zIndex={10}
                 onClick={() => {
                   clickHandler(index);
                 }}
@@ -292,6 +263,13 @@ function GamesPage() {
           );
         })}
       </SimpleGrid>
+      <Stack>
+        <Box>{time}</Box>
+      </Stack>
+      <ModalComponent
+        onopen={time == 0 ? "onopen" : "" || !statu}
+        users={users}
+      />
     </Stack>
   );
 }
