@@ -6,12 +6,12 @@ const GRID = [
   { value: 6, borderright: 50 },
 ];
 function GridButton({ handleValue }) {
-  const [value, setValue] = useState({ name: "grid", value: 4 });
+  const [value, setValue] = useState({ name: "grid", value: 6 });
   useEffect(() => {
     handleValue(value);
   }, [value]);
   return (
-    <Stack>
+    <Stack minW="150px">
       <Flex
         bg={"#fff"}
         justifyContent="space-between"

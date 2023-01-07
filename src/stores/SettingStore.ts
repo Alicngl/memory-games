@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx";
 class SettingStore {
   person: number;
   grid: number;
-  time: number;
+  time: number = 1;
   constructor() {
     makeAutoObservable(this);
   }

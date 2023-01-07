@@ -17,7 +17,8 @@
     "next": "latest",
     "react": "^18.2.0",
     "react-countdown": "^2.3.5",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-timer-hook": "^3.0.5"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",

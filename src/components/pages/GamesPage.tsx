@@ -1,12 +1,14 @@
 import {
   Box,
   Flex,
+  HStack,
   Image,
   SimpleGrid,
   Slider,
   SliderFilledTrack,
   SliderTrack,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { GAME6, GAME4 } from "../../constants";
@@ -16,6 +18,7 @@ import Countdown from "react-countdown";
 import SettingStore from "../../stores/SettingStore";
 import ModalComponent from "../shared/ModalComponent";
 import { useRouter } from "next/router";
+import Timer from "../shared/Timer";
 
 function GamesPage() {
   const [data, setData] = useState(GAME6.sort(() => Math.random() - 0.5));
@@ -69,14 +72,10 @@ function GamesPage() {
     setTime(time * 60);
     if (grid === 4) {
       setData(GAME4.sort(() => Math.random() - 0.5));
-    } else {
-      setData(GAME6.sort(() => Math.random() - 0.5));
     }
     if (users.length != person) {
       const sliced = users.splice(0, person);
       setUsers(sliced);
-    } else {
-      users;
     }
   }, []);
 
@@ -84,106 +83,35 @@ function GamesPage() {
     if (data[current].id === data[previousCardState].id) {
       data[current].status = "active";
       data[previousCardState].status = "active";
+
       setPreviousCardState(-1);
-
-      if (changeUser === 0) {
-        if (person == 1) {
-          users[0].moves += 1;
-          users[0].score += 1;
-
-          setUsers([...users]);
-
-          setChangeUser(changeUser + 1);
-        } else {
-          users[0].opacity = 0.4;
-          users[1].opacity = 1;
-          setUsers([...users]);
-          users[0].moves += 1;
-          users[0].score += 1;
-
-          setUsers([...users]);
-
-          setChangeUser(changeUser + 1);
-        }
+      if (changeUser == users.length - 1) {
+        setChangeUser(0);
+        users[changeUser].opacity = 0.4;
+        users[0].opacity = 1;
       } else {
-        if (changeUser > person - 1) {
-          console.log("asjdhflajsdhf");
-
-          users[person - 1].opacity = 0.4;
-          users[0].opacity = 1;
-          setUsers([...users]);
-          users[0].moves += 1;
-          users[0].score += 1;
-
-          setUsers([...users]);
-          setChangeUser(1);
-        } else {
-          if (changeUser == person - 1) {
-            users[0].opacity = 1;
-            users[changeUser].opacity = 0.4;
-            setUsers([...users]);
-            console.log("değil");
-            setChangeUser(0);
-          } else {
-            setChangeUser(changeUser + 1);
-
-            users[changeUser].opacity = 0.4;
-            users[changeUser + 1].opacity = 1;
-            setUsers([...users]);
-            console.log("aaaaawwwww");
-          }
-
-          users[changeUser].moves += 1;
-          users[changeUser].score += 1;
-
-          setUsers([...users]);
-        }
-      }
-    } else {
-      if (changeUser === 0) {
-        if (person == 1) {
-          users[0].moves += 1;
-
-          setUsers([...users]);
-        } else {
-          users[0].opacity = 0.4;
-          users[1].opacity = 1;
-          setUsers([...users]);
-          users[0].moves += 1;
-
-          setUsers([...users]);
-        }
-
         setChangeUser(changeUser + 1);
-      } else {
-        if (changeUser > person - 1) {
-          users[person - 1].opacity = 0.4;
-          users[0].opacity = 1;
-          setUsers([...users]);
-          users[0].moves += 1;
-
-          setUsers([...users]);
-          setChangeUser(1);
-        } else {
-          if (changeUser == person - 1) {
-            users[0].opacity = 1;
-            users[changeUser].opacity = 0.4;
-            setUsers([...users]);
-            console.log("değil");
-            setChangeUser(0);
-          } else {
-            setChangeUser(changeUser + 1);
-
-            users[changeUser].opacity = 0.4;
-            users[changeUser + 1].opacity = 1;
-            setUsers([...users]);
-          }
-
-          users[changeUser].moves += 1;
-
-          setUsers([...users]);
-        }
+        users[changeUser].opacity = 0.4;
+        users[changeUser + 1].opacity = 1;
       }
+      users[changeUser].score += 1;
+      users[changeUser].moves += 1;
+
+      setUsers([...users]);
+    } else {
+      if (changeUser == users.length - 1) {
+        setChangeUser(0);
+        users[changeUser].opacity = 0.4;
+        users[0].opacity = 1;
+      } else {
+        setChangeUser(changeUser + 1);
+        users[changeUser].opacity = 0.4;
+        users[changeUser + 1].opacity = 1;
+      }
+
+      users[changeUser].moves += 1;
+
+      setUsers([...users]);
       data[current].status = "active";
       setData([...data]);
       setTimeout(() => {
@@ -214,33 +142,31 @@ function GamesPage() {
   };
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      if (time > 0) {
+      if (time > 1) {
         setTime(time - 1);
-      } else {
-        setTime(time);
       }
     }, 1000);
 
     const stopTimeOut = () => {
-      if (time === 0 || !statu) {
+      if (time === 1 || !statu) {
         clearTimeout(timeOut);
       }
     };
     stopTimeOut();
   }, [time]);
 
-  console.log(time);
-  console.log(users, "aaaa");
-
   const statu = data.find((x) => x.status === "");
+  const timer = new Date();
+  timer.setSeconds(timer.getSeconds() + SettingStore.time * 60);
 
   return (
     <Stack align={"center"} mt={5} spacing={9}>
-      <Flex >
+      <Flex>
         {users.map((item, index) => {
           return (
             <Stack key={index}>
               <User
+                bg={"#8a91eb"}
                 name={item.name}
                 moves={users[index].moves}
                 score={users[index].score}
@@ -273,11 +199,11 @@ function GamesPage() {
           );
         })}
       </SimpleGrid>
-      <Stack>
-        <Box>{time}</Box>
-      </Stack>
+      <HStack>
+        <Timer expiryTimestamp={timer} />
+      </HStack>
       <ModalComponent
-        onopen={!statu ? "statu" : time == 0 ? "onopen" : ""}
+        onopen={!statu ? "statu" : time == 1 ? "onopen" : ""}
         users={users}
       />
     </Stack>

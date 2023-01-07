@@ -1,9 +1,9 @@
 import { HStack, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
-function User({ name, moves, score, src, border, opacity }) {
+function User({ name, moves, score, src, border, opacity, bg }) {
   return (
-    <Stack bg={"#494593"} p={3} borderRight={border} opacity={opacity}>
+    <Stack bg={bg} p={3} borderRight={border} opacity={opacity}>
       <HStack>
         <Stack bg={"#fff"} borderRadius={50} p={1} border="2px solid #6b68ba">
           <Image src={src} w={20} h={20} />

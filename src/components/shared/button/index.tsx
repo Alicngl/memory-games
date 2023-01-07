@@ -4,7 +4,7 @@ import Link from "next/link";
 function LinkButton({ href, children, target, ...props }: any) {
   return (
     <Link href={href}>
-      <Button size={"md"} w="full" {...props}>
+      <Button size={"lg"} w="full" borderRadius={99} {...props}>
         {children}
       </Button>
     </Link>
@@ -13,7 +13,7 @@ function LinkButton({ href, children, target, ...props }: any) {
 
 function BaseButton({ children, ...props }: any) {
   return (
-    <Button {...props} size={"md"} w="full">
+    <Button {...props} borderRadius={99} size={"lg"} w="full">
       {children}
     </Button>
   );
@@ -21,7 +21,11 @@ function BaseButton({ children, ...props }: any) {
 
 function ButtonComponent({ children, ...props }: any) {
   const Comp = props.href ? LinkButton : BaseButton;
-  return <Comp {...props}>{children}</Comp>;
+  return (
+    <Comp fontSize="xl" {...props}>
+      {children}
+    </Comp>
+  );
 }
 
 export default ButtonComponent;

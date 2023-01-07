@@ -9,7 +9,11 @@ function NumberInput({ handleValue }) {
   }, [value]);
   return (
     <Stack>
-      <Flex bg={"#fff"} justifyContent="space-between" borderRadius={50}>
+      <Flex
+        bg={"#fff"}
+        justifyContent="space-between"
+        borderRadius={50}
+        minW="150px">
         <Box
           alignSelf="center"
           p={1}
@@ -18,6 +22,7 @@ function NumberInput({ handleValue }) {
               setValue({ ...value, ["value"]: value.value - 1 });
           }}>
           <Icon
+            cursor={"pointer"}
             as={ChevronLeftIcon}
             w={9}
             h={8}
@@ -37,6 +42,7 @@ function NumberInput({ handleValue }) {
               setValue({ ...value, ["value"]: value.value + 1 });
           }}>
           <Icon
+            cursor={"pointer"}
             as={ChevronRightIcon}
             w={9}
             h={8}

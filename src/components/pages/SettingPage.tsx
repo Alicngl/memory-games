@@ -18,11 +18,12 @@ function SettingPage() {
     SettingStore.setSetting(setting.person, setting.grid, setting.time);
   }, [setting]);
   return (
-    <Stack mt={10} spacing={9}>
+    <Stack mt={10} spacing={39} align="center">
+      {" "}
+      <TextComponent color="#fff" fontSize="3xl">
+        SETTINGS
+      </TextComponent>
       <Stack align={"center"} spacing={5}>
-        <TextComponent color="#fff" fontSize="3xl">
-          SETTINGS
-        </TextComponent>
         <Stack>
           <TextComponent color="#fff">Number Of Player</TextComponent>
           <NumberButton handleValue={handleValue} />
@@ -37,10 +38,10 @@ function SettingPage() {
         </Stack>
       </Stack>
       <SimpleGrid columns={2} spacing={5}>
-        <ButtonComponent href="/" borderRadius={20} bg="#fff">
+        <ButtonComponent href="/" bg="#fff">
           CANCEL
         </ButtonComponent>
-        <ButtonComponent href="/games" borderRadius={20} bg="#9de8a3">
+        <ButtonComponent href="/games" bg="#9de8a3">
           START
         </ButtonComponent>
       </SimpleGrid>

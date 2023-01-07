@@ -24,7 +24,7 @@ function NumberButton({ handleValue }) {
   }, [value]);
 
   return (
-    <Stack>
+    <Stack minW="150px">
       <Flex
         bg={"#fff"}
         justifyContent="space-between"
