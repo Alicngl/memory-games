@@ -19,10 +19,10 @@ export default function Timer({ expiryTimestamp }) {
 
   return (
     <HStack spacing={3}>
-      <Flex justify={"space-between"}>
-        <Text>Time :</Text>
+      <Flex fontSize={"xl"} justify={"space-between"}>
+        <Text  color={"#494593"}>Time :</Text>
       </Flex>
-      <Flex>
+      <Flex  color={"#494593"} fontSize="xl">
         <Text>0{minutes}</Text>:<Text>{seconds}</Text>
       </Flex>
     </HStack>

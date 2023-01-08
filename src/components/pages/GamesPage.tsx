@@ -6,6 +6,7 @@ import {
   SimpleGrid,
   Slider,
   SliderFilledTrack,
+  SliderThumb,
   SliderTrack,
   Stack,
   Text,
@@ -160,48 +161,67 @@ function GamesPage() {
   timer.setSeconds(timer.getSeconds() + SettingStore.time * 60);
 
   return (
-    <Stack align={"center"} mt={5} spacing={9}>
-      <Flex>
-        {users.map((item, index) => {
-          return (
-            <Stack key={index}>
-              <User
-                bg={"#8a91eb"}
-                name={item.name}
-                moves={users[index].moves}
-                score={users[index].score}
-                src={item.src}
-                border={item.border}
-                opacity={item.opacity}
-              />
-            </Stack>
-          );
-        })}
-      </Flex>
-      <SimpleGrid
-        columns={data.length === 16 ? 4 : 6}
-        spacing={3}
-        justifySelf="center">
-        {data.map((item, index) => {
-          return (
-            <Stack>
-              <CardComponent
-                zIndex={10}
-                onClick={() => {
-                  clickHandler(index);
-                }}
-                key={index}
-                src={item.status === "" ? "/card-back.png" : item.image}
-                width={[49, 90]}
-                height={20}
-              />
-            </Stack>
-          );
-        })}
-      </SimpleGrid>
-      <HStack>
-        <Timer expiryTimestamp={timer} />
-      </HStack>
+    <Stack align={""} mt={5} spacing={9}>
+      <Stack align={"center"}>
+        <SimpleGrid columns={[2, 4]}>
+          {users.map((item, index) => {
+            return (
+              <Stack key={index}>
+                <User
+                  bg={"#8a91eb"}
+                  name={item.name}
+                  moves={users[index].moves}
+                  score={users[index].score}
+                  src={item.src}
+                  border={item.border}
+                  opacity={item.opacity}
+                />
+              </Stack>
+            );
+          })}
+        </SimpleGrid>
+        <SimpleGrid
+          columns={data.length === 16 ? 4 : 6}
+          spacing={3}
+          justifySelf="center">
+          {data.map((item, index) => {
+            return (
+              <Stack>
+                <CardComponent
+                  zIndex={10}
+                  onClick={() => {
+                    clickHandler(index);
+                  }}
+                  key={index}
+                  src={item.status === "" ? "/card-back.png" : item.image}
+                  width={[49, 90]}
+                  height={[49, 90]}
+                />
+              </Stack>
+            );
+          })}
+        </SimpleGrid>
+      </Stack>
+
+      <Stack align={"center"}>
+        <Stack textAlign={"center"}>
+          <Timer expiryTimestamp={timer} />
+
+          <Slider
+            w={["350px", "600px"]}
+            size={"lg"}
+            h="10px"
+            aria-label="slider-ex-2"
+            colorScheme="pink"
+            value={time}
+            max={SettingStore.time * 60}>
+            <SliderTrack bg={"#8a91eb"} h="10px" borderRadius={50}>
+              <SliderFilledTrack bg={"#494593"} />
+            </SliderTrack>
+          </Slider>
+        </Stack>
+      </Stack>
+
       <ModalComponent
         onopen={!statu ? "statu" : time == 1 ? "onopen" : ""}
         users={users}

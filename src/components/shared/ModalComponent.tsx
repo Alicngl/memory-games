@@ -57,9 +57,9 @@ function ModalComponent({ onopen, users }) {
             <Stack align={"center"} mt={29} spacing={9}>
               {onopen != "onopen" ? (
                 <Stack align={"center"} spacing={39}>
-                  <TextComponent color="#fefefe" fontSize="3xl">
+                  <TextComponent color="#fefefe" fontSize={["2xl", "3xl"]}>
                     {" "}
-                    WINNER IS {(winner?.name).toUpperCase()}
+                    WINNER IS {winner && winner.name.toUpperCase()}
                   </TextComponent>
                   <SimpleGrid columns={[1, 2]} spacing={1}>
                     {users.map((item: any, index: number) => (
@@ -77,9 +77,13 @@ function ModalComponent({ onopen, users }) {
                   </SimpleGrid>
                 </Stack>
               ) : (
-                <Stack>
-                  <TextComponent>SORRY!</TextComponent>
-                  <TextComponent>Time is up!</TextComponent>
+                <Stack align={"center"}>
+                  <TextComponent color="#fefefe" fontSize={["2xl", "3xl"]}>
+                    SORRY!
+                  </TextComponent>
+                  <TextComponent color="#fefefe" fontSize={["2xl", "3xl"]}>
+                    Time is up!
+                  </TextComponent>
                 </Stack>
               )}
             </Stack>
