@@ -31,8 +31,8 @@ function ModalComponent({ onopen, users }) {
       if (users[index].score > bigest) {
         setWinner(users[index]);
         bigest = users[index].score;
-      } else {
-        setWinner(users[0]);
+        console.log("asd");
+        console.log(winner);
       }
     }
   });
