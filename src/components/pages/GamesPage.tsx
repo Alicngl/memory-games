@@ -50,10 +50,10 @@ function GamesPage() {
   const previousIndex = useRef(-1);
   const [changeUser, setChangeUser] = useState(0);
   const [time, setTime] = useState<number>();
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const person = SettingStore.person ? SettingStore.person : 1;
-
     const grid = SettingStore.grid;
     const time = SettingStore.time ? SettingStore.time : 1;
     setTime(time * 60);
@@ -67,12 +67,14 @@ function GamesPage() {
   }, []);
 
   const checkData = (current: number) => {
+    // Eşleşme olduğunda çalışacak
     if (data[current].id === data[previousCardState].id) {
       data[current].status = "active";
       data[previousCardState].status = "active";
 
       setPreviousCardState(-1);
       if (changeUser == users.length - 1) {
+        //Son kullanıcıya geldiğinde çalışacak
         setChangeUser(0);
         users[changeUser].opacity = 0.4;
         users[0].opacity = 1;
@@ -86,7 +88,10 @@ function GamesPage() {
 
       setUsers([...users]);
     } else {
+      //Eşleşme olmadığında çalışacak
+
       if (changeUser == users.length - 1) {
+        //Son kullanıcıya geldiğinde çalışacak
         setChangeUser(0);
         users[changeUser].opacity = 0.4;
         users[0].opacity = 1;
@@ -102,25 +107,31 @@ function GamesPage() {
       data[current].status = "active";
       setData([...data]);
       setTimeout(() => {
+        //Eşleşme yoksa 1 saniye sonra resimleri kapatır
         setPreviousCardState(-1);
         data[current].status = "";
         data[previousCardState].status = "";
+        setCount(0);
         setData([...data]);
       }, 1000);
     }
   };
-
+  //Image ilk tıklamada çalışan fonksiyon
   const clickHandler = async (index: number) => {
     if (index != previousIndex.current) {
       if (data[index].status === "active") {
         alert("Already Matched!!!");
       } else {
+        //Resime ilk tıklama olduğunun kontrolü
         if (previousCardState === -1) {
+          setCount(count + 1);
           previousIndex.current = index;
           data[index].status = "active";
           setData([...data]);
           setPreviousCardState(index);
         } else {
+          //İkinci resimde ise fonksiyona yönlendirir
+          setCount(count + 1);
           checkData(index);
           previousIndex.current = -1;
         }
@@ -147,7 +158,7 @@ function GamesPage() {
   timer.setSeconds(timer.getSeconds() + SettingStore.time * 60);
 
   return (
-    <Stack align={""} mt={5} spacing={9}>
+    <Stack mt={5} spacing={9}>
       <Stack align={"center"} spacing={9}>
         <SimpleGrid columns={users.length}>
           {users.map((item, index) => {
@@ -156,7 +167,7 @@ function GamesPage() {
                 <User
                   bg={"#8a91eb"}
                   name={item.name}
-                  moves={users[index].moves}
+                  moves={users[index].moves == 0 ? "0" : users[index].moves}
                   score={users[index].score}
                   src={item.src}
                   opacity={item.opacity}
@@ -175,7 +186,9 @@ function GamesPage() {
                 {item.status === "" ? (
                   <Image
                     onClick={() => {
-                      clickHandler(index);
+                      if (count < 2) {
+                        clickHandler(index);
+                      }
                     }}
                     src={"/card-back.png"}
                     width={[49, 90]}

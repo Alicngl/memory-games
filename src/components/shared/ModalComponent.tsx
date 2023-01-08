@@ -25,6 +25,7 @@ function ModalComponent({ onopen, users }) {
     router.reload();
   };
   useEffect(() => {
+    // En çok puan alan kullanıcıyı bulma
     var bigest = users[0].score;
     for (let index = 0; index < users.length; index++) {
       if (users[index].score > bigest) {
@@ -52,7 +53,6 @@ function ModalComponent({ onopen, users }) {
         closeOnOverlayClick={false}>
         <ModalOverlay />
         <ModalContent>
-          <ModalCloseButton />
           <ModalBody bg={"#8c93e6"}>
             <Stack align={"center"} mt={29} spacing={9}>
               {onopen != "onopen" ? (
@@ -67,7 +67,7 @@ function ModalComponent({ onopen, users }) {
                         bg={"#494593"}
                         key={index}
                         name={item.name}
-                        moves={item.moves}
+                        moves=""
                         score={item.score}
                         src={item.src}
                         opacity={undefined}

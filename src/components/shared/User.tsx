@@ -12,14 +12,17 @@ function User({ name, moves, score, src, opacity, bg }) {
           <Text fontWeight={"bold"} fontSize={["md", "xl"]} color="#fff">
             {name}
           </Text>
-          <Text
-            width={"100px"}
-            textAlign="center"
-            borderRadius={20}
-            bg="#fff"
-            px={1}>
-            Moves: {moves}
-          </Text>
+          {moves && (
+            <Text
+              width={"100px"}
+              textAlign="center"
+              borderRadius={20}
+              bg="#fff"
+              px={1}>
+              Moves: {moves}
+            </Text>
+          )}
+
           <Text
             width={"100px"}
             textAlign="center"
