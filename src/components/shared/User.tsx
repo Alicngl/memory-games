@@ -14,7 +14,7 @@ function User({ name, moves, score, src, opacity, bg }) {
           </Text>
           {moves && (
             <Text
-              width={"100px"}
+              width={["75px", "100px"]}
               textAlign="center"
               borderRadius={20}
               bg="#fff"
@@ -24,7 +24,7 @@ function User({ name, moves, score, src, opacity, bg }) {
           )}
 
           <Text
-            width={"100px"}
+            width={["75px", "100px"]}
             textAlign="center"
             borderRadius={20}
             bg="#fff"

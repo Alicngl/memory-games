@@ -3,7 +3,7 @@ import GamesPage from "../components/pages/GamesPage";
 
 function Games() {
   return (
-    <Stack bg={"#e6e7ff"} h="100vh">
+    <Stack bg={"#e6e7ff"} h={["100vh", "", "100vh"]}>
       <GamesPage />
     </Stack>
   );

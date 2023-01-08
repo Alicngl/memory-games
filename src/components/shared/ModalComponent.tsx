@@ -61,7 +61,7 @@ function ModalComponent({ onopen, users }) {
                     {" "}
                     WINNER IS {winner && winner.name.toUpperCase()}
                   </TextComponent>
-                  <SimpleGrid columns={[1, 2]} spacing={1}>
+                  <SimpleGrid columns={2} spacing={1}>
                     {users.map((item: any, index: number) => (
                       <User
                         bg={"#494593"}

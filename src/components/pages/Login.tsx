@@ -12,7 +12,7 @@ function Login() {
       justify={"center"}
       spacing={29}>
       <TextComponent
-        children={"Memory Games"}
+        children={"MEMORY GAMES"}
         fontSize={["4xl", "6xl"]}
         color="#fff"
       />

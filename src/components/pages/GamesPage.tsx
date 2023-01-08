@@ -161,7 +161,7 @@ function GamesPage() {
   return (
     <Stack mt={5} spacing={9}>
       <Stack align={"center"} spacing={9}>
-        <SimpleGrid columns={users.length}>
+        <SimpleGrid columns={[2, users.length]}>
           {users.map((item, index) => {
             return (
               <Stack key={index}>
