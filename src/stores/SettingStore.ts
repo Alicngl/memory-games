@@ -9,10 +9,10 @@ class SettingStore {
   }
 
   setSetting(person: number, grid: number, time: number) {
+    //Ayarlardan seçilen verileri getirir
     this.person = person;
     this.grid = grid;
     this.time = time;
-    console.log(person, grid, time, "HELLO STORE");
   }
 }
 export default new SettingStore();

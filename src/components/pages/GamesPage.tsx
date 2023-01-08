@@ -159,8 +159,8 @@ function GamesPage() {
   timer.setSeconds(timer.getSeconds() + SettingStore.time * 60);
 
   return (
-    <Stack mt={5} spacing={9}>
-      <Stack align={"center"} spacing={9}>
+    <Stack mt={5} spacing={[3, 9]}>
+      <Stack align={"center"} spacing={[3, 9]}>
         <SimpleGrid columns={[2, users.length]}>
           {users.map((item, index) => {
             return (

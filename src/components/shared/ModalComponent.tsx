@@ -42,7 +42,6 @@ function ModalComponent({ onopen, users }) {
     }
   }, [onopen]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log(winner, "...");
 
   return (
     <Stack>
