@@ -85,6 +85,7 @@ function GamesPage() {
       }
       users[changeUser].score += 1;
       users[changeUser].moves += 1;
+      setCount(0);
 
       setUsers([...users]);
     } else {
@@ -107,13 +108,13 @@ function GamesPage() {
       data[current].status = "active";
       setData([...data]);
       setTimeout(() => {
-        //Eşleşme yoksa 1 saniye sonra resimleri kapatır
+        //Eşleşme yoksa 0.7 saniye sonra resimleri kapatır
         setPreviousCardState(-1);
         data[current].status = "";
         data[previousCardState].status = "";
         setCount(0);
         setData([...data]);
-      }, 1000);
+      }, 700);
     }
   };
   //Image ilk tıklamada çalışan fonksiyon
