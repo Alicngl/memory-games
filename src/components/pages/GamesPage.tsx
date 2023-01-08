@@ -1,12 +1,8 @@
 import {
-  Box,
-  Flex,
-  HStack,
   Image,
   SimpleGrid,
   Slider,
   SliderFilledTrack,
-  SliderThumb,
   SliderTrack,
   Stack,
   Text,
@@ -15,10 +11,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { GAME6, GAME4 } from "../../constants";
 import CardComponent from "../shared/CardComponent";
 import User from "../shared/User";
-import Countdown from "react-countdown";
 import SettingStore from "../../stores/SettingStore";
 import ModalComponent from "../shared/ModalComponent";
-import { useRouter } from "next/router";
 import Timer from "../shared/Timer";
 
 function GamesPage() {
@@ -29,7 +23,6 @@ function GamesPage() {
       moves: 0,
       score: 0,
       src: "/avatar1.png",
-      border: "1px",
       opacity: 1,
     },
     {
@@ -37,7 +30,6 @@ function GamesPage() {
       moves: 0,
       score: 0,
       src: "/avatar2.png",
-      border: "1px",
       opacity: 0.4,
     },
     {
@@ -45,7 +37,6 @@ function GamesPage() {
       moves: 0,
       score: 0,
       src: "/avatar1.png",
-      border: "1px",
       opacity: 0.4,
     },
     {
@@ -53,7 +44,6 @@ function GamesPage() {
       moves: 0,
       score: 0,
       src: "/avatar2.png",
-      border: "1px",
       opacity: 0.4,
     },
   ]);
@@ -61,12 +51,9 @@ function GamesPage() {
   const previousIndex = useRef(-1);
   const [changeUser, setChangeUser] = useState(0);
   const [time, setTime] = useState<number>();
-  const [person, setPerson] = useState(1);
-  const router = useRouter();
 
   useEffect(() => {
     const person = SettingStore.person ? SettingStore.person : 1;
-    setPerson(person);
 
     const grid = SettingStore.grid;
     const time = SettingStore.time ? SettingStore.time : 1;
@@ -162,8 +149,8 @@ function GamesPage() {
 
   return (
     <Stack align={""} mt={5} spacing={9}>
-      <Stack align={"center"}>
-        <SimpleGrid columns={[2, 4]}>
+      <Stack align={"center"} spacing={9}>
+        <SimpleGrid columns={users.length}>
           {users.map((item, index) => {
             return (
               <Stack key={index}>
@@ -173,7 +160,6 @@ function GamesPage() {
                   moves={users[index].moves}
                   score={users[index].score}
                   src={item.src}
-                  border={item.border}
                   opacity={item.opacity}
                 />
               </Stack>
@@ -187,7 +173,35 @@ function GamesPage() {
           {data.map((item, index) => {
             return (
               <Stack>
-                <CardComponent
+                {item.status === "" ? (
+                  <Image
+                    onClick={() => {
+                      clickHandler(index);
+                    }}
+                    src={"/card-back.png"}
+                    width={[49, 90]}
+                    height={[49, 90]}
+                  />
+                ) : (
+                  <Stack position={"relative"} align="center">
+                    <Image
+                      top={0}
+                      src="/card.png"
+                      position={"absolute"}
+                      width={[49, 90]}
+                      height={[49, 90]}
+                    />
+                    <Image
+                      alignSelf={"center"}
+                      zIndex={10000}
+                      src={item.image}
+                      position="absolute"
+                      width={[35, 70]}
+                      height={[35, 70]}
+                    />
+                  </Stack>
+                )}
+                {/* <CardComponent
                   zIndex={10}
                   onClick={() => {
                     clickHandler(index);
@@ -196,7 +210,7 @@ function GamesPage() {
                   src={item.status === "" ? "/card-back.png" : item.image}
                   width={[49, 90]}
                   height={[49, 90]}
-                />
+                /> */}
               </Stack>
             );
           })}

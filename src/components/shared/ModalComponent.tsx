@@ -70,7 +70,6 @@ function ModalComponent({ onopen, users }) {
                         moves={item.moves}
                         score={item.score}
                         src={item.src}
-                        border={item.border}
                         opacity={undefined}
                       />
                     ))}
@@ -78,7 +77,10 @@ function ModalComponent({ onopen, users }) {
                 </Stack>
               ) : (
                 <Stack align={"center"}>
-                  <TextComponent color="#fefefe" fontSize={["2xl", "3xl"]}>
+                  <TextComponent
+                    color="#fefefe"
+                    fontSize={["2xl", "3xl"]}
+                    fontWeight="semibold">
                     SORRY!
                   </TextComponent>
                   <TextComponent color="#fefefe" fontSize={["2xl", "3xl"]}>
