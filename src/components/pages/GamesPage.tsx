@@ -5,7 +5,6 @@ import {
   SliderFilledTrack,
   SliderTrack,
   Stack,
-  Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { GAME6, GAME4 } from "../../constants";
@@ -69,8 +68,8 @@ function GamesPage() {
   const checkData = (current: number) => {
     // Eşleşme olduğunda çalışacak
     if (data[current].id === data[previousCardState].id) {
-      data[current].status = "active";
-      data[previousCardState].status = "active";
+      data[current].status = true;
+      data[previousCardState].status = true;
 
       setPreviousCardState(-1);
       if (changeUser == users.length - 1) {
@@ -105,13 +104,13 @@ function GamesPage() {
       users[changeUser].moves += 1;
 
       setUsers([...users]);
-      data[current].status = "active";
+      data[current].status = true;
       setData([...data]);
       setTimeout(() => {
         //Eşleşme yoksa 0.7 saniye sonra resimleri kapatır
         setPreviousCardState(-1);
-        data[current].status = "";
-        data[previousCardState].status = "";
+        data[current].status = false;
+        data[previousCardState].status = false;
         setCount(0);
         setData([...data]);
       }, 700);
@@ -120,14 +119,14 @@ function GamesPage() {
   //Image ilk tıklamada çalışan fonksiyon
   const clickHandler = async (index: number) => {
     if (index != previousIndex.current) {
-      if (data[index].status === "active") {
+      if (data[index].status === true) {
         alert("Already Matched!!!");
       } else {
         //Resime ilk tıklama olduğunun kontrolü
         if (previousCardState === -1) {
           setCount(count + 1);
           previousIndex.current = index;
-          data[index].status = "active";
+          data[index].status = true;
           setData([...data]);
           setPreviousCardState(index);
         } else {
@@ -154,7 +153,7 @@ function GamesPage() {
     stopTimeOut();
   }, [time]);
 
-  const statu = data.find((x) => x.status === "");
+  const statu = data.find((x) => x.status === false);
   const timer = new Date();
   timer.setSeconds(timer.getSeconds() + SettingStore.time * 60);
 
@@ -184,7 +183,7 @@ function GamesPage() {
           {data.map((item, index) => {
             return (
               <Stack>
-                {item.status === "" ? (
+                {item.status === false ? (
                   <Image
                     onClick={() => {
                       if (count < 2) {
