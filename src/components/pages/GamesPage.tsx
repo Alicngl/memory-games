@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { GAME6, GAME4 } from "../../constants";
-import CardComponent from "../shared/CardComponent";
 import User from "../shared/User";
 import SettingStore from "../../stores/SettingStore";
 import ModalComponent from "../shared/ModalComponent";
@@ -187,13 +186,12 @@ function GamesPage() {
                     <Image
                       top={0}
                       src="/card.png"
-                      position={"absolute"}
                       width={[49, 90]}
                       height={[49, 90]}
                     />
                     <Image
                       alignSelf={"center"}
-                      zIndex={10000}
+                      zIndex={1}
                       src={item.image}
                       position="absolute"
                       width={[35, 70]}
@@ -201,16 +199,6 @@ function GamesPage() {
                     />
                   </Stack>
                 )}
-                {/* <CardComponent
-                  zIndex={10}
-                  onClick={() => {
-                    clickHandler(index);
-                  }}
-                  key={index}
-                  src={item.status === "" ? "/card-back.png" : item.image}
-                  width={[49, 90]}
-                  height={[49, 90]}
-                /> */}
               </Stack>
             );
           })}

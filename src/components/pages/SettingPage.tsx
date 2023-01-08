@@ -9,7 +9,7 @@ import NumberInput from "../shared/NumberInput";
 import TextComponent from "../shared/TextComponent";
 
 function SettingPage() {
-  const [setting, setSetting] = useState({ person: 1, grid: 4, time: 1 });
+  const [setting, setSetting] = useState({ person: 1, grid: 6, time: 1 });
 
   const handleValue = (e: any) => {
     setSetting({ ...setting, [e.name]: e.value });
